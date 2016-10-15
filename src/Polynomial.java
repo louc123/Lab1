@@ -1,4 +1,8 @@
-Hello World at b1
+<<<<<<< HEAD
+Hello World at branch
+=======
+Hello World at branch
+>>>>>>> C4
 import java.util.*;
 import java.util.regex.*;
 import java.lang.*;

@@ -1,3 +1,7 @@
 This is 1.txt.
 Now we change it.
-change at b1.
+<<<<<<< HEAD
+change at branch.
+=======
+change at branch.
+>>>>>>> C4
