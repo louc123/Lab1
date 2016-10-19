@@ -1,13 +1,12 @@
-Hello World
 import java.util.*;
 import java.util.regex.*;
 import java.lang.*;
 public class Polynomial {
-	private String ch0,input;//Ô­Ê¼
-	private Element[] e;//»¯¼ò
-	private Map<String,Integer> map;//´æÖµ
-	private Map<String,Integer> sim;//ºÏ²¢Í¬ÀàÏî
-	//private char[] ch2;//ºó×º
+	private String ch0,input;//åŸå§‹
+	private Element[] e;//åŒ–ç®€
+	private Map<String,Integer> map;//å­˜å€¼
+	private Map<String,Integer> sim;//åˆå¹¶åŒç±»é¡¹
+	//private char[] ch2;//åç¼€
 	public Polynomial(String str){
 		this.input=new String(str);
 		this.ch0=new String(str);
@@ -15,11 +14,11 @@ public class Polynomial {
 	}
 	
 	public void translation(){
-		ch0=ch0.replace(" ", "");//È¥¿Õ¸ñ
-		ch0=ch0.replace("\t", "");//È¥tab
+		ch0=ch0.replace(" ", "");//å»ç©ºæ ¼
+		ch0=ch0.replace("\t", "");//å»tab
 		Pattern p=Pattern.compile("(([a-z]{1,})\\^([0-9]{1,}))");
 		Matcher m=p.matcher(ch0);
-		while(m.find()){//È¥³Ë·½
+		while(m.find()){//å»ä¹˜æ–¹
 			String a=new String(m.group(2)),temp=new String(m.group(2));
 			for(int i=0;i<Integer.parseInt(m.group(3))-1;i++){
 				temp=temp.concat("*"+a);
@@ -29,20 +28,20 @@ public class Polynomial {
 		
 	}
 	
-	public boolean isLegal(){/*¶àÏîÊ½ÊÇ·ñºÏ·¨*/
-		this.translation();//×ª»¯ÎªºÏ·¨ĞÎÊ½
+	public boolean isLegal(){/*å¤šé¡¹å¼æ˜¯å¦åˆæ³•*/
+		this.translation();//è½¬åŒ–ä¸ºåˆæ³•å½¢å¼
 		boolean flag=true;
 		char[] temp=ch0.toCharArray();
 		int i=temp.length-1;
 		if(!((temp[0]>='0'&& temp[0]<='9')||(temp[0]>='a' && temp[0]<='z'))){
-			/*Ê×Î²ÊÇ·ñºÏ·¨*/
+			/*é¦–å°¾æ˜¯å¦åˆæ³•*/
 			flag=false;
 		}else if(!((temp[i]>='0'&& temp[i]<='9')||(temp[i]>='a' && temp[i]<='z'))){
 			flag=false;
 		}else{
 			for(i=1;i<temp.length;i++){
 				if(!((temp[i]>='0'&& temp[i]<='9')||(temp[i]>='a' && temp[i]<='z')||(temp[i]=='+')||(temp[i]=='*')||(temp[i]=='-'))){
-					/*×Ö·ûÊÇ·ñºÏ·¨*/
+					/*å­—ç¬¦æ˜¯å¦åˆæ³•*/
 					flag=false;
 					break;
 				}
@@ -68,7 +67,7 @@ public class Polynomial {
 		return flag;
 	}
 	
-	public void Order(String order){/*³ÌĞòÈë¿Ú*/
+	public void Order(String order){/*ç¨‹åºå…¥å£*/
 		if(this.isLegal()){
 			this.expression();
 			/*char[] temp=ch0.toCharArray();
@@ -122,8 +121,8 @@ public class Polynomial {
 		}
 	}
 	
-	private void expression(){//½«±í´ïÊ½×ª»»ÎªElement,´æÖµ
-		String ch=ch0.replace("-", "+-");//ÔÚ¡°-¡±Ç°¼ÓÈë¡±+¡°
+	private void expression(){//å°†è¡¨è¾¾å¼è½¬æ¢ä¸ºElement,å­˜å€¼
+		String ch=ch0.replace("-", "+-");//åœ¨â€œ-â€å‰åŠ å…¥â€+â€œ
 		String[] ch1=ch.split("\\+"),temp0;
 		e=new Element[ch1.length];
 		for(int i=0;i<ch1.length;i++){
@@ -132,7 +131,7 @@ public class Polynomial {
 		int temp1=1;
 		Pattern p=Pattern.compile("[0-9]{1,}");
 		for(int i=0;i<ch1.length;i++){
-			if(ch1[i].charAt(0)=='-'){//ÉèÖÃÕı¸º
+			if(ch1[i].charAt(0)=='-'){//è®¾ç½®æ­£è´Ÿ
 				e[i].setsym();ch1[i]=ch1[i].substring(1);
 			}
 			temp0=ch1[i].split("\\*");
@@ -146,7 +145,7 @@ public class Polynomial {
 		}
 	}
 	
-	private String simplyfy(String order){//ÃüÁîÒÑºÏ·¨
+	private String simplyfy(String order){//å‘½ä»¤å·²åˆæ³•
 		String result=new String();
 		Tuple temp=new Tuple();
 		sim=new HashMap<String,Integer>();
@@ -156,8 +155,8 @@ public class Polynomial {
 		while(m.find()){
 			map.put(m.group(1), Integer.parseInt(m.group(2)));
 		}
-		for(int i=0;i<e.length;i++){//ºÏ²¢Í¬ÀàÏî
-			temp=e[i].simplyfy(map);//µ¥ÏîÇóÖµ/»¯¼ò
+		for(int i=0;i<e.length;i++){//åˆå¹¶åŒç±»é¡¹
+			temp=e[i].simplyfy(map);//å•é¡¹æ±‚å€¼/åŒ–ç®€
 			if(sim.containsKey(temp.str)){
 				temp.index+=sim.get(temp.str);
 				sim.put(temp.str, temp.index);
@@ -207,7 +206,7 @@ public class Polynomial {
 		return result;
 	}
 	
-	private String derivative(String order){//ÃüÁîÒÑºÏ·¨
+	private String derivative(String order){//å‘½ä»¤å·²åˆæ³•
 		String result=new String();
 		Tuple temp=new Tuple();
 		sim=new HashMap<String,Integer>();
@@ -279,9 +278,9 @@ public class Polynomial {
 					long startTime=System.nanoTime();
 					p.Order(s);
 					long endTime=System.nanoTime();
-					System.out.println("³ÌĞò¿ªÊ¼Ê±¼ä£º "+startTime+"ns");
-					System.out.println("³ÌĞò½áÊøÊ±¼ä£º "+endTime+"ns");
-					System.out.println("³ÌĞòÔËĞĞÊ±¼ä£º "+(endTime-startTime)+"ns");
+					System.out.println("ç¨‹åºå¼€å§‹æ—¶é—´ï¼š "+startTime+"ns");
+					System.out.println("ç¨‹åºç»“æŸæ—¶é—´ï¼š "+endTime+"ns");
+					System.out.println("ç¨‹åºè¿è¡Œæ—¶é—´ï¼š "+(endTime-startTime)+"ns");
 					s=i.nextLine();
 				}str1=s;
 			}else{
@@ -309,7 +308,7 @@ class Tuple {
 class Element{
 	private boolean sym;
 	private int coe;
-	private Map<String,Integer> m;//´æ´¢¸Ã³Ë·¨Ïî°üº¬µÄ±äÁ¿¼°ÆäÖ¸Êı
+	private Map<String,Integer> m;//å­˜å‚¨è¯¥ä¹˜æ³•é¡¹åŒ…å«çš„å˜é‡åŠå…¶æŒ‡æ•°
 	public Element(){
 		this.coe=1;
 		sym=false;
@@ -415,7 +414,7 @@ class Element{
 	
 	
 	
-/*public void expression(String str){/*×ª»¯Îªºó×º±í´ïÊ½
+/*public void expression(String str){/*è½¬åŒ–ä¸ºåç¼€è¡¨è¾¾å¼
 int i=0,j=0;
 char[] temp=str.toCharArray();
 ch2=new char[100];
