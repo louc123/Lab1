@@ -1,13 +1,23 @@
+<<<<<<< HEAD
 Hello World
+=======
+>>>>>>> 2b3958523abbfc70d44d968806e471d4e7976139
 import java.util.*;
 import java.util.regex.*;
 import java.lang.*;
 public class Polynomial {
+<<<<<<< HEAD
 	private String ch0,input;//原始
 	private Element[] e;//化简
 	private Map<String,Integer> map;//存值
 	private Map<String,Integer> sim;//合并同类项
 	//private char[] ch2;//后缀
+=======
+	private Element[] e;//化简
+	private Map<String,Integer> map;//存值
+	private Map<String,Integer> sim;//合并同类项
+
+>>>>>>> 2b3958523abbfc70d44d968806e471d4e7976139
 	public Polynomial(String str){
 		this.input=new String(str);
 		this.ch0=new String(str);
