@@ -2,11 +2,10 @@ import java.util.*;
 import java.util.regex.*;
 import java.lang.*;
 public class Polynomial {
-	private String ch0,input;//原始
 	private Element[] e;//化简
 	private Map<String,Integer> map;//存值
 	private Map<String,Integer> sim;//合并同类项
-	//private char[] ch2;//后缀
+
 	public Polynomial(String str){
 		this.input=new String(str);
 		this.ch0=new String(str);
