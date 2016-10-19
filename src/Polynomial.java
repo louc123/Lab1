@@ -1,4 +1,15 @@
-Hello World
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+Hello World at branch
+=======
+Hello World at branch
+>>>>>>> C4
+=======
+Hello World at branch
+>>>>>>> B2
+>>>>>>> origin2/test
 import java.util.*;
 import java.util.regex.*;
 import java.lang.*;
