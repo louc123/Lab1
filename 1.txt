@@ -1,3 +1,16 @@
-This is 1.txt.
+﻿This is 1.txt.
 Now we change it.
+<<<<<<< HEAD
 eeee
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+change at branch.
+=======
+change at branch.
+>>>>>>> C4
+=======
+change at branch.
+>>>>>>> B2
+eeee
+>>>>>>> origin/1140320211

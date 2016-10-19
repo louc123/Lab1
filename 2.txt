@@ -1,3 +1,16 @@
-This is 2.txt.
+﻿This is 2.txt.
 Now we change it,too.
+<<<<<<< HEAD
 qqq
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+changed.
+=======
+changed.
+>>>>>>> C4
+=======
+changed.
+>>>>>>> B2
+qqq
+>>>>>>> origin/1140320211

@@ -1,7 +1,18 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 Hello World
 =======
 >>>>>>> 2b3958523abbfc70d44d968806e471d4e7976139
+=======
+<<<<<<< HEAD
+Hello World at branch
+=======
+Hello World at branch
+>>>>>>> C4
+=======
+Hello World at branch
+>>>>>>> B2
+>>>>>>> origin/1140320211
 import java.util.*;
 import java.util.regex.*;
 import java.lang.*;
@@ -13,6 +24,7 @@ public class Polynomial {
 	private Map<String,Integer> sim;//合并同类项
 	//private char[] ch2;//后缀
 =======
+	private String ch0,input;//原始
 	private Element[] e;//化简
 	private Map<String,Integer> map;//存值
 	private Map<String,Integer> sim;//合并同类项
