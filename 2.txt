@@ -1,2 +1,12 @@
 This is 2.txt.
 Now we change it,too.
+<<<<<<< HEAD
+<<<<<<< HEAD
+changed.
+=======
+changed.
+>>>>>>> C4
+=======
+changed.
+>>>>>>> B2
+场景3

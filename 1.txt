@@ -1,2 +1,12 @@
 This is 1.txt.
 Now we change it.
+<<<<<<< HEAD
+<<<<<<< HEAD
+change at branch.
+=======
+change at branch.
+>>>>>>> C4
+=======
+change at branch.
+>>>>>>> B2
+场景3
