@@ -1,29 +1,24 @@
 import java.util.*;
-import java.lang.*;
 import java.util.regex.*;
-
-
+import java.lang.*;
 public class Polynomial {
-	
-	private String ch0,input;//鍘熷
-	private Element[] e;//鍖栫畝
-	private Map<String,Integer> map;//瀛樺��
-	private Map<String,Integer> sim;//鍚堝苟鍚岀被椤�
-	//private char[] ch2;//鍚庣紑
-	
-	public Polynomial(String str)
-	{
+	private String ch0,input;//原始
+	private Element[] e;//化简
+	private Map<String,Integer> map;//存值
+	private Map<String,Integer> sim;//合并同类项
+	//private char[] ch2;//后缀
+	public Polynomial(String str){
 		this.input=new String(str);
 		this.ch0=new String(str);
 		map=new HashMap<String,Integer>();
 	}
 	
 	public void translation(){
-		ch0=ch0.replace(" ", "");//鍘荤┖鏍�
-		ch0=ch0.replace("\t", "");//鍘籺ab
+		ch0=ch0.replace(" ", "");//去空格
+		ch0=ch0.replace("\t", "");//去tab
 		Pattern p=Pattern.compile("(([a-z]{1,})\\^([0-9]{1,}))");
 		Matcher m=p.matcher(ch0);
-		while(m.find()){//鍘讳箻鏂�
+		while(m.find()){//去乘方
 			String a=new String(m.group(2)),temp=new String(m.group(2));
 			for(int i=0;i<Integer.parseInt(m.group(3))-1;i++){
 				temp=temp.concat("*"+a);
@@ -33,20 +28,20 @@ public class Polynomial {
 		
 	}
 	
-	public boolean isLegal(){/*澶氶」寮忔槸鍚﹀悎娉�*/
-		this.translation();//杞寲涓哄悎娉曞舰寮�
+	public boolean isLegal(){/*多项式是否合法*/
+		this.translation();//转化为合法形式
 		boolean flag=true;
 		char[] temp=ch0.toCharArray();
 		int i=temp.length-1;
 		if(!((temp[0]>='0'&& temp[0]<='9')||(temp[0]>='a' && temp[0]<='z'))){
-			/*棣栧熬鏄惁鍚堟硶*/
+			/*首尾是否合法*/
 			flag=false;
 		}else if(!((temp[i]>='0'&& temp[i]<='9')||(temp[i]>='a' && temp[i]<='z'))){
 			flag=false;
 		}else{
 			for(i=1;i<temp.length;i++){
 				if(!((temp[i]>='0'&& temp[i]<='9')||(temp[i]>='a' && temp[i]<='z')||(temp[i]=='+')||(temp[i]=='*')||(temp[i]=='-'))){
-					/*瀛楃鏄惁鍚堟硶*/
+					/*字符是否合法*/
 					flag=false;
 					break;
 				}
@@ -72,7 +67,7 @@ public class Polynomial {
 		return flag;
 	}
 	
-	public void Order(String order){/*绋嬪簭鍏ュ彛*/
+	public void Order(String order){/*程序入口*/
 		if(this.isLegal()){
 			this.expression();
 			/*char[] temp=ch0.toCharArray();
@@ -81,7 +76,7 @@ public class Polynomial {
 					map.put(Character.toString(temp[i]), -1);
 				}
 			}*/
-			Pattern p1=Pattern.compile("!simplify\\s*|^!simplify\\s([a-z]{1,}=[0-9]{1,}\\s*)*\\s*");
+			Pattern p1=Pattern.compile("!simplyfy\\s*|^!simplyfy\\s([a-z]{1,}=[0-9]{1,}\\s*)*\\s*");
 			Pattern p2=Pattern.compile("!d/d\\s+[a-z]{1,}\\s*");
 			Pattern p3=Pattern.compile("([a-z]{1,})=[0-9]{1,}");
 			Pattern p4=Pattern.compile("\\s+([a-z]{1,})\\s*");
@@ -108,7 +103,7 @@ public class Polynomial {
 					flag=true;
 				}
 				if(flag){
-					System.out.println(this.simplify(order));
+					System.out.println(this.simplyfy(order));
 				}else{
 					System.out.println("Order is Wrong!");
 				}
@@ -126,8 +121,8 @@ public class Polynomial {
 		}
 	}
 	
-	private void expression(){//灏嗚〃杈惧紡杞崲涓篍lement,瀛樺��
-		String ch=ch0.replace("-", "+-");//鍦ㄢ��-鈥濆墠鍔犲叆鈥�+鈥�
+	private void expression(){//将表达式转换为Element,存值
+		String ch=ch0.replace("-", "+-");//在“-”前加入”+“
 		String[] ch1=ch.split("\\+"),temp0;
 		e=new Element[ch1.length];
 		for(int i=0;i<ch1.length;i++){
@@ -136,7 +131,7 @@ public class Polynomial {
 		int temp1=1;
 		Pattern p=Pattern.compile("[0-9]{1,}");
 		for(int i=0;i<ch1.length;i++){
-			if(ch1[i].charAt(0)=='-'){//璁剧疆姝ｈ礋
+			if(ch1[i].charAt(0)=='-'){//设置正负
 				e[i].setsym();ch1[i]=ch1[i].substring(1);
 			}
 			temp0=ch1[i].split("\\*");
@@ -150,7 +145,7 @@ public class Polynomial {
 		}
 	}
 	
-	private String simplify(String order){//鍛戒护宸插悎娉�
+	private String simplyfy(String order){//命令已合法
 		String result=new String();
 		Tuple temp=new Tuple();
 		sim=new HashMap<String,Integer>();
@@ -160,8 +155,8 @@ public class Polynomial {
 		while(m.find()){
 			map.put(m.group(1), Integer.parseInt(m.group(2)));
 		}
-		for(int i=0;i<e.length;i++){//鍚堝苟鍚岀被椤�
-			temp=e[i].simplify(map);//鍗曢」姹傚��/鍖栫畝
+		for(int i=0;i<e.length;i++){//合并同类项
+			temp=e[i].simplyfy(map);//单项求值/化简
 			if(sim.containsKey(temp.str)){
 				temp.index+=sim.get(temp.str);
 				sim.put(temp.str, temp.index);
@@ -211,7 +206,7 @@ public class Polynomial {
 		return result;
 	}
 	
-	private String derivative(String order){//鍛戒护宸插悎娉�
+	private String derivative(String order){//命令已合法
 		String result=new String();
 		Tuple temp=new Tuple();
 		sim=new HashMap<String,Integer>();
@@ -283,9 +278,9 @@ public class Polynomial {
 					long startTime=System.nanoTime();
 					p.Order(s);
 					long endTime=System.nanoTime();
-					System.out.println("绋嬪簭寮�濮嬫椂闂达細 "+startTime+"ns");
-					System.out.println("绋嬪簭缁撴潫鏃堕棿锛� "+endTime+"ns");
-					System.out.println("绋嬪簭杩愯鏃堕棿锛� "+(endTime-startTime)+"ns");
+					System.out.println("程序开始时间： "+startTime+"ns");
+					System.out.println("程序结束时间： "+endTime+"ns");
+					System.out.println("程序运行时间： "+(endTime-startTime)+"ns");
 					s=i.nextLine();
 				}str1=s;
 			}else{
@@ -313,35 +308,30 @@ class Tuple {
 class Element{
 	private boolean sym;
 	private int coe;
-	private Map<String,Integer> m;//瀛樺偍璇ヤ箻娉曢」鍖呭惈鐨勫彉閲忓強鍏舵寚鏁�
+	private Map<String,Integer> m;//存储该乘法项包含的变量及其指数
 	public Element(){
 		this.coe=1;
 		sym=false;
 		m=new HashMap<String,Integer>();
 	}
-	
 	public boolean getsym(){
 		return sym;
 	}
-	
 	public void setsym(){
 		sym=true;
 	}
 	public int getcoe(){
 		return this.coe;
 	}
-	
 	public void setcoe(int num){
 		this.coe=num;
 	}
-	
 	public void print(){
 		System.out.println("coe:"+coe);
 		for(String str:m.keySet()){
 			System.out.println("key:"+str+" index:"+Integer.toString(m.get(str)));
 		}
 	}
-	
 	public void addMap(String str){
 		if(!m.containsKey(str)){
 			m.put(str,1);
@@ -350,8 +340,7 @@ class Element{
 			m.put(str,d);
 		}
 	}
-	
-	public Tuple simplify(Map<String,Integer> v){
+	public Tuple simplyfy(Map<String,Integer> v){
 		int temp=0;
 		if(sym){
 			temp=-1*this.coe;
@@ -425,7 +414,7 @@ class Element{
 	
 	
 	
-/*public void expression(String str){/*杞寲涓哄悗缂�琛ㄨ揪寮�
+/*public void expression(String str){/*转化为后缀表达式
 int i=0,j=0;
 char[] temp=str.toCharArray();
 ch2=new char[100];
