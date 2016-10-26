@@ -97,7 +97,11 @@ public class Polynomial {
 		if(this.isLegal()){
 			this.expression();
 
-			Pattern p1=Pattern.compile("!simplyfy\\s*|^!simplyfy\\s([a-z]{1,}=[0-9]{1,}\\s*)*\\s*"); // 检查化简语句的合法性
+<<<<<<< HEAD
+			Pattern p1=Pattern.compile("!simplify\\s*|^!simplify\\s([a-z]{1,}=[0-9]{1,}\\s*)*\\s*"); // 检查化简语句的合法性
+=======
+			Pattern p1=Pattern.compile("!simplify\\s*|^!simplify\\s([a-z]{1,}=[0-9]{1,}\\s*)*\\s*"); // 检查化简语句的合法性
+>>>>>>> Lab4
 			Pattern p2=Pattern.compile("!d/d\\s+[a-z]{1,}\\s*");									 // 检查求导语句的合法性
 			Pattern p3=Pattern.compile("([a-z]{1,})=[0-9]{1,}");									 // 匹配 "单词=数字"的模式
 			Pattern p4=Pattern.compile("\\s+([a-z]{1,})\\s*");										 // 匹配 去掉所有的空格 找到变量名
@@ -106,7 +110,11 @@ public class Polynomial {
 			while(m5.find()){
 				map.put(m5.group(), -1); 	//找单词
 			}
-			if(m1.matches()){				//simplyfy 入口
+<<<<<<< HEAD
+			if(m1.matches()){				//simplify 入口
+=======
+			if(m1.matches()){				//simplify 入口
+>>>>>>> Lab4
 				boolean flag=false;
 				int count=0;
 				Set<String> set=new HashSet<String>();
@@ -124,7 +132,11 @@ public class Polynomial {
 					flag=true;
 				}
 				if(flag){
-					System.out.println(this.simplyfy(order)); //多项式无误
+<<<<<<< HEAD
+					System.out.println(this.simplify(order)); //多项式无误
+=======
+					System.out.println(this.simplify(order)); //多项式无误
+>>>>>>> Lab4
 				}else{
 					System.out.println("Order is Wrong!");
 				}
@@ -174,7 +186,11 @@ public class Polynomial {
 		}
 	}
 	
-	private String simplyfy(String order){
+<<<<<<< HEAD
+	private String simplify(String order){
+=======
+	private String simplify(String order){
+>>>>>>> Lab4
 	/**求值化简方法
 		@输入 合法的化简命令字符串
 		@输出 化简后的字符串
@@ -190,7 +206,7 @@ public class Polynomial {
 			map.put(m.group(1), Integer.parseInt(m.group(2)));
 		}
 		for(int i=0;i<e.length;i++){//合并同类项
-			temp=e[i].simplyfy(map);//单项求值/化简
+			temp=e[i].simplify(map);//单项求值/化简
 			if(sim.containsKey(temp.str)){
 				temp.index+=sim.get(temp.str);
 				sim.put(temp.str, temp.index);
@@ -352,7 +368,11 @@ class Element{
 				setcoe 设标系数
 				print 为了检测使用的输出测试函数
 				addMap 酱变量加入map
-				simplyfy 将数值带入化简后输出字符
+<<<<<<< HEAD
+				simplify 将数值带入化简后输出字符
+=======
+				simplify 将数值带入化简后输出字符
+>>>>>>> Lab4
 				derivative 求导
 	*/
 	private boolean sym;
@@ -389,7 +409,7 @@ class Element{
 			m.put(str,d);
 		}
 	}
-	public Tuple simplyfy(Map<String,Integer> v){
+	public Tuple simplify(Map<String,Integer> v){
 		int temp=0;
 		if(sym){
 			temp=-1*this.coe;
