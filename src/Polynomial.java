@@ -96,12 +96,7 @@ public class Polynomial {
 		*/
 		if(this.isLegal()){
 			this.expression();
-
-<<<<<<< HEAD
-			Pattern p1=Pattern.compile("!simplify\\s*|^!simplify\\s([a-z]{1,}=[0-9]{1,}\\s*)*\\s*"); // 检查化简语句的合法性
-=======
-			Pattern p1=Pattern.compile("!simplify\\s*|^!simplify\\s([a-z]{1,}=[0-9]{1,}\\s*)*\\s*"); // 检查化简语句的合法性
->>>>>>> Lab4
+			Pattern p1=Pattern.compile("!simplify\\s*|^!simplify\\s([a-z]{1,}=[0-9]{1,}\\s+)*([a-z]{1,}=[0-9]{1,})\\s*"); // 检查化简语句的合法性
 			Pattern p2=Pattern.compile("!d/d\\s+[a-z]{1,}\\s*");									 // 检查求导语句的合法性
 			Pattern p3=Pattern.compile("([a-z]{1,})=[0-9]{1,}");									 // 匹配 "单词=数字"的模式
 			Pattern p4=Pattern.compile("\\s+([a-z]{1,})\\s*");										 // 匹配 去掉所有的空格 找到变量名
@@ -110,11 +105,7 @@ public class Polynomial {
 			while(m5.find()){
 				map.put(m5.group(), -1); 	//找单词
 			}
-<<<<<<< HEAD
 			if(m1.matches()){				//simplify 入口
-=======
-			if(m1.matches()){				//simplify 入口
->>>>>>> Lab4
 				boolean flag=false;
 				int count=0;
 				Set<String> set=new HashSet<String>();
@@ -132,13 +123,9 @@ public class Polynomial {
 					flag=true;
 				}
 				if(flag){
-<<<<<<< HEAD
 					System.out.println(this.simplify(order)); //多项式无误
-=======
-					System.out.println(this.simplify(order)); //多项式无误
->>>>>>> Lab4
 				}else{
-					System.out.println("Order is Wrong!");
+					System.out.println("Order is Wrong!No Variable!");
 				}
 			}else if(p2.matcher(order).matches()){			 //求导表达式检查
 				if(m3.find() && map.containsKey(m3.group(1))){  // 寻找多长度变量名以及判断是否存在
@@ -154,7 +141,7 @@ public class Polynomial {
 		}
 	}
 	
-	private void expression(){
+	public void expression(){
 	/**
 	*将表达式转换为Element格式
 	*并更新单项式的变量表和系数
@@ -186,11 +173,7 @@ public class Polynomial {
 		}
 	}
 	
-<<<<<<< HEAD
-	private String simplify(String order){
-=======
-	private String simplify(String order){
->>>>>>> Lab4
+	public String simplify(String order){
 	/**求值化简方法
 		@输入 合法的化简命令字符串
 		@输出 化简后的字符串
