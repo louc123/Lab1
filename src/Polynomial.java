@@ -239,7 +239,7 @@ public class Polynomial {
 		return result;
 	}
 	
-	private String derivative(String order){//命令已合法
+	public String derivative(String order){//命令已合法
 		String result=new String();
 		Tuple temp=new Tuple();
 		sim=new HashMap<String,Integer>();
@@ -259,9 +259,9 @@ public class Polynomial {
 				if(s.equals("1")){
 					num=sim.get(s);
 				}else{
-					if(result==null || result.length()<=0){
+					if(result.length()<=0){
 						if(sim.get(s)==1){
-							result=result.concat(s);
+							result=result.concat("+"+s);
 						}else if(sim.get(s)==-1){
 							result=result.concat("-"+s);
 						}else{
@@ -281,7 +281,7 @@ public class Polynomial {
 				}
 			}
 			if(num==0){
-				if(result==null || result.length()<=0){
+				if(result.length()<=0){
 					result="0";
 				}else{
 					if(result.charAt(0)=='+'){
@@ -289,7 +289,7 @@ public class Polynomial {
 					}
 				}
 			}else{
-				if(result==null || result.length()<=0){
+				if(result.length()<=0){
 					result=Integer.toString(num);
 				}else{
 					result=Integer.toString(num).concat(result);
