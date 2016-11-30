@@ -16,7 +16,7 @@ public class TestSimplify7 {
 		PrintStream cacheStream = new PrintStream(baoStream);
 		PrintStream oldStream = System.out;	 
         System.setOut(cacheStream);
-        polynomial.Order("!simplify a=2");
+        System.out.println(polynomial.Order("!simplify a=2"));
         String message = baoStream.toString();
         System.setOut(oldStream);
         assertEquals("Order is Wrong!No Variable!",message.trim());

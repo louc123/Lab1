@@ -16,7 +16,7 @@ public class TestSimplify5 {
 		PrintStream cacheStream = new PrintStream(baoStream);
 		PrintStream oldStream = System.out;	 
         System.setOut(cacheStream);
-        polynomial.Order("!s x=1 y=2");
+        System.out.println(polynomial.Order("!s x=1 y=2"));
         String message = baoStream.toString();
         System.setOut(oldStream);
         assertEquals("Order is Wrong!",message.trim());

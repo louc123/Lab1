@@ -82,7 +82,7 @@ public class Polynomial {
 		return flag;
 	}
 	
-	public void Order(String order){
+	public String Order(String order){
 		/**
 		*程序入口,!simp1yfy和求导命令的模式匹配
 		输入 命令字符串order
@@ -94,6 +94,7 @@ public class Polynomial {
 		flag: 化简命令合法标志 true- 合法
 
 		*/
+		String result = new String();
 		if(this.isLegal()){
 			this.expression();
 			Pattern p1=Pattern.compile("!simplify\\s*|^!simplify\\s([a-z]{1,}=[0-9]{1,}\\s+)*([a-z]{1,}=[0-9]{1,})\\s*"); // 检查化简语句的合法性
@@ -123,21 +124,27 @@ public class Polynomial {
 					flag=true;
 				}
 				if(flag){
-					System.out.println(this.simplify(order)); //多项式无误
+					result = this.simplify(order); //多项式无误
+					return result;
 				}else{
-					System.out.println("Order is Wrong!No Variable!");
+					result = "Order is Wrong!No Variable!";
+					return result;
 				}
 			}else if(p2.matcher(order).matches()){			 //求导表达式检查
 				if(m3.find() && map.containsKey(m3.group(1))){  // 寻找多长度变量名以及判断是否存在
-					System.out.println(this.derivative(order));
+					result = this.derivative(order);
+					return result;
 				}else{
-					System.out.println("Order is Wrong!No Variable!");
+					result = "Order is Wrong!No Variable!";
+					return result;
 				}
 			}else{
-				System.out.println("Order is Wrong!");
+				result = "Order is Wrong!";
+				return result;
 			}
 		}else{
-			System.out.println("Polynomial is wrong!");
+			result = "Polynomial is wrong!";
+			return result;
 		}
 	}
 	
@@ -299,27 +306,8 @@ public class Polynomial {
 		return result;
 	}
 	public static void main(String[] args){
-			Scanner i=new Scanner(System.in);
-			String str1=i.nextLine();
-			while(true){
-				Polynomial p=new Polynomial(str1);
-				if(p.isLegal()){
-					System.out.println(str1);
-					String s=i.nextLine();
-					while(s.charAt(0)=='!'){
-						long startTime=System.nanoTime();
-						p.Order(s);
-						long endTime=System.nanoTime();
-						System.out.println("程序开始时间： "+startTime+"ns");
-						System.out.println("程序结束时间： "+endTime+"ns");
-						System.out.println("程序运行时间： "+(endTime-startTime)+"ns");
-						s=i.nextLine();
-					}str1=s;
-				}else{
-					System.out.println("Polynomial is Wrong!");
-					str1=i.nextLine();
-				}
-			}
+			control c = new control();
+			c.order();
 	}
 }
 
@@ -461,5 +449,45 @@ class Element{
 		}else {
 			return new Tuple(temp,result.substring(1));  //返回字母标志
 		}
+	}
+}
+
+
+class control{
+	private String str;
+	public control(){
+		str = new String();
+	}
+	public void setStr(String str){
+		this.str = new String(str);	
+	}
+	public String getStr(){
+		return this.str;
+	}
+	public String order(){
+		Scanner i=new Scanner(System.in);
+		String str1=i.nextLine();
+		while(true){
+			Polynomial p=new Polynomial(str1);
+			if(p.isLegal()){
+				System.out.println(str1);
+				String s=i.nextLine();
+				while(s.charAt(0)=='!'){
+					long startTime=System.nanoTime();
+					str=p.Order(s);
+					System.out.println(str);
+					long endTime=System.nanoTime();
+					System.out.println("程序开始时间： "+startTime+"ns");
+					System.out.println("程序结束时间： "+endTime+"ns");
+					System.out.println("程序运行时间： "+(endTime-startTime)+"ns");
+					s=i.nextLine();
+				}str1=s;
+			}else{
+				str="Polynomial is Wrong!";
+				System.out.println(str);
+				str1=i.nextLine();
+			}
+		}
+
 	}
 }
